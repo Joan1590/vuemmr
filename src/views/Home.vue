@@ -1,8 +1,41 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+ <section class="jumbotron vertical-center main">
+  <div class="container">
+      <div class="card-deck">
+      <div class="card">
+          <img src="../assets/analysis.png" class="card-img-top">
+          <div class="card-body">
+          <h5 class="card-title"><i class="fa fa-search"></i> Search</h5>
+          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          </div>
+          <div class="card-footer">
+              <router-link to="/search" class="btn btn-primary">Go to Search</router-link>
+          </div>
+      </div>
+      <div class="card">
+          <img src="../assets/analysis.png" class="card-img-top">
+          <div class="card-body">
+          <h5 class="card-title"><i class="fa fa-chart-bar"></i> Analyze</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+          <div class="card-footer">
+              <a href="#" class="btn btn-primary">Go to Analyze</a>
+          </div>
+      </div>
+
+      <div class="card">
+          <img src="../assets/analysis.png" class="card-img-top">
+          <div class="card-body">
+          <h5 class="card-title"><i class="fa fa-dna"></i> Antigenic Epitopes</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+          </div>
+          <div class="card-footer">
+              <a href="#" class="btn btn-primary">Go to Antigenic Epitopes</a>
+          </div>
+      </div>
+      </div>
   </div>
+  </section>
 </template>
 
 <script>
