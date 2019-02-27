@@ -30,7 +30,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div id="containi">
+                <div class="row" id="navi" v-bind:class="{ disabledClass: isLodaingCriteria }">
                     <div class="col">
                         <label for="xyzw1" class="col-form-label">Gene Symbol</label>
                         
@@ -68,11 +69,34 @@
                         </select>
                     </div>
                 </div>
+                <flower-spinner id="infoi" v-if="isLodaingCriteria"
+                  :animation-duration="1500"
+                  :size="70"
+                  :color="'#00d961'"
+                />
+                </div>
                 <br>
                 <div class="row">
                     <div class="col-sm-12">
-                    <button type="submit" class="btn btn-primary capitalize"><i class="fa fa-search"></i> 
-                    Search for {{specimen.replace("_", " ") + "es"}} ({{num_virus}} results)</button>
+                    <router-link :to="{ 
+                      name: 'results', 
+                      params: {
+                        specimen: specimen,
+                        search_type: 'custom', 
+                        gene_symbols: criteria_selection.gene_symbols, 
+                        proteins: criteria_selection.proteins, 
+                        hosts: criteria_selection.hosts, 
+                        countries: criteria_selection.countries, 
+                        years: criteria_selection.years, 
+                        } 
+                      }" class="btn btn-primary">
+                      <span v-if="!isLodaingResultsCount">
+                        <i class="fa fa-search"></i>  Search for {{specimen.replace("_", " ") + "es"}} <span style="font-weight: bold">({{num_virus}} results)</span>
+                      </span>
+                      <span v-if="isLodaingResultsCount">
+                        <fulfilling-bouncing-circle-spinner :animation-duration="2000" :size="24" :color="'#ffffff'"/>
+                      </span>
+                    </router-link>
                     </div>
                 </div>
                 </form>
@@ -153,18 +177,35 @@
 
 <script>
 import axios from 'axios'
+import {FlowerSpinner, FulfillingBouncingCircleSpinner} from 'epic-spinners'
 
 // @ is an alias to /src
 export default {
   name: "search",
+  components: {
+    FlowerSpinner,
+    FulfillingBouncingCircleSpinner
+  },
   data () {
     return {
+      isLodaingCriteria: true,
+      isLodaingResultsCount: true,
       accession_num: "",
-      specimen: "Measles_virus",
+      specimen: "Mumps_virus",
       num_virus: 0,
       criteria: {
-        gene_symbol: null,
-        protein: null,
+        gene_symbols: null,
+        proteins: null,
+        hosts: null,
+        countries: null,
+        years: null,
+      },
+      criteria_selection: {
+        gene_symbols: null,
+        proteins: null,
+        hosts: null,
+        countries: null,
+        years: null,
       },
     }
   },
@@ -180,21 +221,19 @@ export default {
     }
   },
   methods: {
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
     loadCriteria (specimen) {
       axios.post("http://localhost:8000/viruses/search_criteria/" + specimen).then(response=>{
         this.criteria = response.data;
-
-        for (var key in this.criteria) {
-          if (key != "collection_date") {
-            //this.criteria[key] = this.criteria[key].map(x => x != null ? x.replace("_", " ") : "N/A")
-            this.criteria[key] = this.criteria[key].map(x => x != null ? x : "N/A")
-          } else {
-            this.criteria[key] = this.criteria[key].map(x => x != null ? x : "N/A")
-          }
-        }
+        this.sleep(500)
+         this.sleep(500).then( ()=>{
+        this.isLodaingCriteria = false;});
       })
     },
     getCriteriaResultCount(gene_symbols = null, proteins = null, hosts = null, countries = null, years = null) {
+      this.isLodaingResultsCount = true;
       axios.post("http://localhost:8000/viruses/search_criteria/result_count/" + this.specimen, {
         gene_symbol: gene_symbols,
         protein: proteins,
@@ -203,37 +242,55 @@ export default {
         collection_date: years,
       }).then(response=>{  
         this.num_virus = response.data
+        this.sleep(500).then( ()=>{
+        this.isLodaingResultsCount = false});
       })
     },
     fetchData () {
       this.loadCriteria("Mumps_virus")
       this.getCriteriaResultCount()
+      this.resetSelection()
     },
     setCriteria() {
-      // If any is selected, remove all other selections
-      var sym;
-      if($("#selGeneSymbol").val().includes("(Any)")|| $("#selGeneSymbol").val().length == 0)
-      {
-        $("#selGeneSymbol option:selected").prop("selected", false);
-        $("#selGeneSymbol").val("(Any)");
-        sym = null;
-      }
-      else
-      {
-        sym = $("#selGeneSymbol").val()
-      }
 
-      var pro = $("#selProtein").val().length == 0 ? null : $("#selProtein").val()
-      var hos = $("#selHost").val().length == 0 ? null : $("#selHost").val()
-      var con = $("#selCountry").val().length == 0 ? null : $("#selCountry").val()
-      var yea = $("#selYear").val().length == 0 ? null : $("#selYear").val()
+      // If any is selected, remove all other selections
+      var sym = this.getSelectedValue("#selGeneSymbol");
+      var pro = this.getSelectedValue("#selProtein");
+      var hos = this.getSelectedValue("#selHost");
+      var con = this.getSelectedValue("#selCountry");
+      var yea = this.getSelectedValue("#selYear");
+
+      this.criteria_selection.gene_symbols = sym;
+      this.criteria_selection.proteins = pro;
+      this.criteria_selection.hosts = hos;
+      this.criteria_selection.countries = con;
+      this.criteria_selection.years = yea;
       
       this.getCriteriaResultCount(sym, pro, hos, con, yea)
     },
+    getSelectedValue(selector) {
+      if($(selector).val().includes("(Any)")|| $(selector).val().length == 0)
+      {
+        $(selector + " option:selected").prop("selected", false);
+        $(selector).val("(Any)");
+        return null;
+      }
+      return $(selector).val();
+    },
+    resetSelection() {
+      for(var selector of ["#selGeneSymbol", "#selProtein", "#selHost", "#selCountry", "#selYear"])
+      {
+        $(selector + " option:selected").prop("selected", false);
+        $(selector).val("(Any)");
+      }
+    },
     setSpecimen(specimen) {
+      this.isLodaingCriteria = true;
       this.specimen = specimen
       this.loadCriteria(specimen)
       this.getCriteriaResultCount()
+      this.resetSelection()
+      this.setCriteria()
     }
   }
 };
@@ -242,6 +299,45 @@ export default {
 <style>
 .capitalize {
   text-transform:capitalize;
+}
+/* 
+*  The .navi properties are for styling only
+*  These properties can be changed or removed
+*/
+.navi {
+  background-color: #eaeaea;
+  height: 40px;
+}
+
+
+/*
+*  Position the #infoi element in the top-right
+*  of the .wrapper element
+*/
+#infoi {
+  position: absolute;
+  top: calc(50% - 35px);
+  right: calc(50% - 35px);
+  
+  /*
+  *  Styling only, the below can be changed or removed
+  *  depending on your use case
+  */
+  height: 100px;
+  width: 100%;
+  padding: 10px 10px;
+}
+
+.row {
+  padding-bottom: 5px;
+}
+
+.disabledClass {
+  background-color: #f0f0f0;
+}
+
+.disabledClass select {
+  background-color: #f0f0f0
 }
 </style>
 

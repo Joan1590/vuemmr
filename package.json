@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "epic-spinners": "^1.0.4",
     "vue": "^2.6.6",
-    "vue-router": "^3.0.1"
+    "vue-google-charts": "^0.3.2",
+    "vue-router": "^3.0.1",
+    "vue-spinner": "^1.0.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
