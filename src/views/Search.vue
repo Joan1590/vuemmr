@@ -35,35 +35,35 @@
                     <div class="col">
                         <label for="xyzw1" class="col-form-label">Gene Symbol</label>
                         
-                        <select v-if="criteria.gene_symbol"  multiple="multiple" class="form-control" id="selGeneSymbol" @click="setCriteria()" size="7">
+                        <select multiple="multiple" class="form-control" id="selGeneSymbol" @click="setCriteria()" size="7">
                           <option>(Any)</option>
                           <option v-for="gs in criteria.gene_symbol" v-bind:key="gs">{{gs}}</option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="xyzw1" class="col-form-label">Protein</label>
-                        <select v-if="criteria.protein" multiple class="form-control" id="selProtein" @click="setCriteria()"  size="7">
+                        <select multiple class="form-control" id="selProtein" @click="setCriteria()"  size="7">
                             <option>(Any)</option>
                             <option v-for="prot in criteria.protein" v-bind:key="prot">{{prot}}</option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="xyzw1" class="col-form-label">Host</label>
-                        <select v-if="criteria.host" multiple class="form-control" id="selHost" @click="setCriteria()" size="7">
+                        <select multiple class="form-control" id="selHost" @click="setCriteria()" size="7">
                             <option>(Any)</option>
                             <option v-for="host in criteria.host" v-bind:key="host">{{host}}</option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="xyzw1" class="col-form-label">Country</label>
-                        <select v-if="criteria.country" multiple class="form-control" id="selCountry" @click="setCriteria()"  size="7">
+                        <select multiple class="form-control" id="selCountry" @click="setCriteria()"  size="7">
                             <option>(Any)</option>
                             <option v-for="country in criteria.country" v-bind:key="country">{{country}}</option>
                         </select>
                     </div>
                     <div class="col">
                         <label for="xyzw1" class="col-form-label">Collection Date</label>
-                        <select  v-if="criteria.collection_date" multiple class="form-control" id="selYear" @click="setCriteria()"  size="7">
+                        <select multiple class="form-control" id="selYear" @click="setCriteria()"  size="7">
                             <option>(Any)</option>
                             <option v-for="year in criteria.collection_date" v-bind:key="year">{{year}}</option>
                         </select>
