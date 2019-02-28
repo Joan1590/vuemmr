@@ -157,13 +157,13 @@ export default {
         }
     },
     getVirusesByAccession(accessionNum) {
-        axios.get("http://localhost:8000/viruses/search/by_accession/" + accessionNum).then(response=>{
+        axios.get("/api/viruses/search/by_accession/" + accessionNum).then(response=>{
             this.viruses = response.data;
             this.buildGeoMap();
         })
     },
     getVirusesCustom(gene_symbols = null, proteins = null, hosts = null, countries = null, years = null) {
-      axios.post("http://localhost:8000/viruses/search/by_criteria/" + this.specimen, {
+      axios.post("/api/viruses/search/by_criteria/" + this.specimen, {
         gene_symbol: gene_symbols,
         protein: proteins,
         host: hosts,

@@ -225,7 +225,7 @@ export default {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
     loadCriteria (specimen) {
-      axios.post("http://localhost:8000/viruses/search_criteria/" + specimen).then(response=>{
+      axios.post("/api/viruses/search_criteria/" + specimen).then(response=>{
         this.criteria = response.data;
         this.sleep(500)
          this.sleep(500).then( ()=>{
@@ -234,7 +234,7 @@ export default {
     },
     getCriteriaResultCount(gene_symbols = null, proteins = null, hosts = null, countries = null, years = null) {
       this.isLodaingResultsCount = true;
-      axios.post("http://localhost:8000/viruses/search_criteria/result_count/" + this.specimen, {
+      axios.post("/api/viruses/search_criteria/result_count/" + this.specimen, {
         gene_symbol: gene_symbols,
         protein: proteins,
         host: hosts,
