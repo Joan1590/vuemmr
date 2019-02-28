@@ -24,7 +24,7 @@
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-      <br>
+    <br>
     <section>
     <table id="myTable" class="display nowrap table" style="width:100%">
         <thead>
@@ -70,8 +70,9 @@
    </section>
 
   </div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-    <GChart type="GeoChart" :data="chartData" :options="chartOptions" :settings="{packages: ['corechart', 'table'], mapsApiKey:'AIzaSyCqaPSmctfwgNKG5GE2DN3JMMGYDFItgQQ'}"/>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="width:100%">
+    <br>
+    <GChart v-if="chartData" :resizeDebounce="500" type="GeoChart" :data="chartData" :options="chartOptions" :settings="{packages: ['corechart', 'table'], mapsApiKey:'AIzaSyCqaPSmctfwgNKG5GE2DN3JMMGYDFItgQQ'}"/>
   </div>
 </div>
 
@@ -94,8 +95,10 @@ export default {
   data () {
     return {
         viruses: null,
-        chartData: [['Country', 'Popularity'], ["Germany", 400]],
-        chartOptions: {}
+        chartData: [['Country', 'Popularity']],
+        chartOptions: {
+            height: 600
+        }
     }
   },
   created () {
