@@ -2,15 +2,17 @@
 <section style="padding: 4rem 2rem">
 <h5><a href="/">
   <i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;
-  <a href="#/search"><i class="fa fa-search"></i> <span v-if="search_type=='custom'"> Custom</span> Search</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;
-  Found {{viruses ? viruses.length : "..."}} results <span v-if="search_type=='accession'">for the search query {{accession_num}}</span></h5>
-  <div v-if="search_type=='custom'">Search criteria: 
-      <span class="badge badge-light">Gene Symobols:</span>&nbsp;<span class="crit">{{gene_symbols ? gene_symbols.join(", ") : "(Any)"}}</span>&nbsp;
-      <span class="badge badge-light">Proteins:</span>&nbsp;<span class="crit">{{proteins ? proteins.join(", ") : "(Any)"}}</span>&nbsp;
-      <span class="badge badge-light">Hosts:</span>&nbsp;<span class="crit">{{hosts ? hosts.join(", ") : "(Any)"}}</span>&nbsp;
-      <span class="badge badge-light">Countries:</span>&nbsp;<span class="crit">{{countries ? countries.join(", ") : "(Any)"}}</span>&nbsp;
-      <span class="badge badge-light">Collection Dates:</span>&nbsp;<span class="crit">{{years ? years.join(", ") : "(Any)"}}</span>
-      </div>
+  <a href="#/search"><i class="fa fa-search"></i> <span v-if="search_type=='custom'"> Custom</span> Search</a>&nbsp;<i class="fas fa-chevron-right"></i>
+  Found {{viruses ? viruses.length : "..."}} results <span v-if="search_type=='accession'">for the accession number {{accession_num}}</span></h5>
+  <div v-if="search_type=='custom'">
+        Search criteria: 
+        <span class="badge badge-primary">{{specimen.split("_")[0]}}</span>
+        <span class="badge badge-light">Gene Symobols:</span>&nbsp;<span class="crit">{{gene_symbols ? gene_symbols.join(", ") : "(Any)"}}</span>&nbsp;
+        <span class="badge badge-light">Proteins:</span>&nbsp;<span class="crit">{{proteins ? proteins.join(", ") : "(Any)"}}</span>&nbsp;
+        <span class="badge badge-light">Hosts:</span>&nbsp;<span class="crit">{{hosts ? hosts.join(", ") : "(Any)"}}</span>&nbsp;
+        <span class="badge badge-light">Countries:</span>&nbsp;<span class="crit">{{countries ? countries.join(", ") : "(Any)"}}</span>&nbsp;
+        <span class="badge badge-light">Collection Dates:</span>&nbsp;<span class="crit">{{years ? years.join(", ") : "(Any)"}}</span>
+        </div>
 <br>
 
 <div v-if="isLoadingResult" style="text-align: center">
