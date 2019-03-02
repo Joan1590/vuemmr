@@ -91,7 +91,7 @@
         <GChart v-if="chartData" :resizeDebounce="500" type="GeoChart" :data="chartData" :options="chartOptions" :settings="{packages: ['corechart', 'table'], mapsApiKey:'AIzaSyCqaPSmctfwgNKG5GE2DN3JMMGYDFItgQQ'}"/>
         </div>
         <div class="col-3">
-            <table class="table table-sm">
+            <table class="table table-sm" id="seqTable">
                 <thead>
                     <tr>
                     <th>Country</th>
@@ -99,9 +99,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="cd in chartData.slice(1)" v-bind:key="cd[0]">
-                        <td>{{cd[0]}}</td>
-                        <td>{{cd[1]}}</td>
+                    <tr v-for="(v, k) in chartTableData" v-bind:key="k" :class="{'table-secondary':(k == 'N/A')}">
+                        <td>{{k}}</td>
+                        <td>{{v}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -132,10 +132,32 @@ export default {
     return {
         viruses: null,
         chartData: [['Country', 'Popularity']],
+        chartTableData: {},
         chartOptions: {
-            height: 600
+          height: 600,
+          datalessRegionColor: "#fcfcfc",
+          colorAxis: {colors: ['lightblue', 'green']}
         },
         isLoadingResult: true,
+        country_codes: {'Afghanistan': 'AF', 'Albania': 'AL', 'Algeria': 'DZ', 'Angola': 'AO', 'Argentina': 'AR', 'Australia': 'AU', 
+          'Austria': 'AT', 'Azerbaijan': 'AZ', 'Bahrain': 'BH', 'Bangladesh': 'BD', 'Belarus': 'BY', 'Belgium': 'BE', 'Belize': 'BZ', 
+          'Benin': 'BJ', 'Bolivia': 'BO', 'Bosnia_and_Herzegovina': 'BA', 'Botswana': 'BW', 'Brazil': 'BR', 'Brunei': 'BN', 'Bulgaria': 'BG',
+          'Burkina_Faso': 'BF', 'Cambodia': 'CO', 'Cameroon': 'CM', 'Canada': 'CA', 'Central_African_Republic': 'CF', 'Chile': 'CL',
+          'China': 'CN', 'Colombia': 'CO', 'Cote_dIvoire': 'CI', 'Croatia': 'HR', 'Cyprus': 'CY', 'Czech_Republic': 'CZ',
+          'Democratic_Republic_of_the_Congo': 'CD', 'Denmark': 'DK', 'Dominican_Republic': 'DO', 'Ecuador': 'EC', 'Egypt': 'EG', 'Equatorial_Guinea': 'GQ',
+          'Estonia': 'EE', 'Ethiopia': 'ET', 'Finland': 'FI', 'France': 'FR', 'Gabon': 'GA', 'Gambia': 'GM', 'Germany': 'DE', 'Ghana': 'GH',
+          'Gibraltar': 'GI', 'Greece': 'GR', 'Guam': 'GU', 'Guyana': 'GY', 'Honduras': 'HN', 'Hong_Kong': 'HK', 'Hungary': 'HU', 'India': 'IN',
+          'Indonesia': 'ID', 'Iran': 'IR', 'Iraq': 'IQ', 'Ireland': 'IE', 'Israel': 'IL', 'Italy': 'IT', 'Japan': 'JP', 'Kazakhstan': 'KZ', 'Kenya': 'KE',
+          'Korea': 'KP', 'Kyrgyzstan': 'KZ', 'Laos': 'LA', 'Latvia': 'LV', 'Lebanon': 'LB', 'Lesotho': 'LS', 'Liberia': 'LR', 'Libya': 'LY', 'Lithuania': 'LT',
+          'Luxembourg': 'LU', 'Macedonia': 'MK', 'Malawi': 'MW', 'Malaysia': 'MY', 'Mali': 'ML', 'Mauritania': 'MR', 'Mayotte': 'YT', 'Mexico': 'MX',
+          'Moldova': 'MD', 'Mongolia': 'MN', 'Morocco': 'MA', 'Mozambique': 'MZ', 'Myanmar': 'MM', 'Namibia': 'NA', 'Nepal': 'NP', 'Netherlands': 'NL',
+          'New_Zealand': 'NZ', 'Niger': 'NE', 'Nigeria': 'NG', 'Norway': 'NO', 'Oman': 'OM', 'Pakistan': 'PK', 'Palau': 'PW', 'Panama': 'PA',
+          'Papua_New_Guinea': 'PG', 'Peru': 'PE', 'Philippines': 'PH', 'Poland': 'PL', 'Portugal': 'PT', 'Qatar': 'QA', 'Republic_of_the_Congo': 'CD',
+          'Romania': 'RO', 'Russia': 'RU', 'Rwanda': 'RW', 'Senegal': 'SN', 'Serbia': 'RS', 'Serbia_and_Montenegro': 'ME', 'Seychelles': 'SC',
+          'Sierra_Leone': 'SL', 'Singapore': 'SG', 'Slovenia': 'SI', 'Somalia': 'SO', 'South_Africa': 'ZA', 'South_Korea': 'KR', 'Spain': 'ES',
+          'Sri_Lanka': 'LK', 'Sudan': 'SD', 'Swaziland (Eswatani)': 'SZ', 'Sweden': 'SE', 'Switzerland': 'CH', 'Syria': 'SY', 'Taiwan': 'TW', 'Thailand': 'TH',
+          'Togo': 'TG', 'Tunisia': 'TN', 'Turkey': 'TR', 'Uganda': 'UG', 'Ukraine': 'UA', 'United_Arab_Emirates': 'AE', 'United_Kingdom': 'GB', 'Uruguay': 'UY',
+          'USA': 'US', 'Uzbekistan': 'UZ', 'Viet_Nam': 'VN', 'West_Bank': 'PS', 'Zambia': 'ZM', 'Zimbabwe': 'ZW'},
     }
   },
   created () {
@@ -146,7 +168,7 @@ export default {
       columnDefs: [ {
         orderable: false,
         className: 'select-checkbox',
-        targets:   0
+        targets: 0
       },
       {
         targets: [ 13 ],
@@ -160,6 +182,12 @@ export default {
       },
       order: [[ 1, "desc" ]],
       responsive: true
+    });
+
+    $('#seqTable').DataTable({
+      order: [[ 1, "desc" ]],
+      "dom": '<"toolbar">',
+      "paging": false,
     });
 
 
@@ -215,24 +243,28 @@ export default {
     buildGeoMap() {
         var results = [['Country', 'Sequences']];
         var counts = {};
+        var tableCounts = {};
 
         for(var v of this.viruses) {
-            if(v.country in counts) {
-                counts[v.country]++;
-            }
-            else
-            {
-                counts[v.country] = 1;
-            }
+          var country_code = this.country_codes[v.country];
+
+          if(country_code in counts) {
+            counts[country_code]++;
+            tableCounts[v.country]++;
+          }
+          else
+          {
+            counts[country_code] = 1;
+            tableCounts[v.country] = 1;
+          }
         }
 
         for(var k in counts) {
-            var countryName = k.replace(/_/g, " ");
-            countryName = countryName == "USA" ? "United States" : countryName;
-            results.push([countryName, counts[k]])
+          results.push([k, counts[k]])
         }
 
         this.chartData = results;
+        this.chartTableData = tableCounts;
     },
     getMapCounts(gene_symbols = null, proteins = null, hosts = null, countries = null, years = null) {
       axios.post("/api/map/by_criteria/" + this.specimen, {
