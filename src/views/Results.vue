@@ -28,15 +28,18 @@
     <span class="badge badge-success">Loading Results...</span>
 </div>
 <div v-if="!isLoadingResult">
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="mainTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Results (Table)</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">World Map Distribution</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="hist-tab" data-toggle="tab" href="#hist" role="tab" aria-controls="hist" aria-selected="false">Collection Date Distribution</a>
+  </li>
 </ul>
-<div class="tab-content" id="myTabContent">
+<div class="tab-content" id="mainTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <br>
     <section>
@@ -99,9 +102,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(v, k) in chartTableData" v-bind:key="k" :class="{'table-secondary':(k == 'N/A')}">
-                        <td>{{k}}</td>
-                        <td>{{v}}</td>
+                    <tr v-for="data in chartData.slice(1)" v-bind:key="data[0]" :class="{'table-secondary':(data[0] == 'N/A')}">
+                        <td>{{data[0]}}</td>
+                        <td>{{data[1]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="hist" role="tabpanel" aria-labelledby="hist-tab" style="width:100%">
+    <br>
+    <div class="row">
+        <div class="col-9">
+        <GChart ref="gchartHist" v-if="yearData" type="ColumnChart" :data="yearData" :options="chartOptions" :settings="{packages: ['corechart']}"/>
+        </div>
+        <div class="col-3">
+            <table class="table table-sm" id="yearTable">
+                <thead>
+                    <tr>
+                    <th>Year</th>
+                    <th>Sequence Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="data in yearData.slice(1)" v-bind:key="data[0]" :class="{'table-secondary':(data[0] == 'N/A')}">
+                        <td>{{data[0]}}</td>
+                        <td>{{data[1]}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -138,6 +165,7 @@ export default {
           datalessRegionColor: "#fcfcfc",
           colorAxis: {colors: ['lightblue', 'green']}
         },
+        yearData: {},
         isLoadingResult: true,
         country_codes: {'Afghanistan': 'AF', 'Albania': 'AL', 'Algeria': 'DZ', 'Angola': 'AO', 'Argentina': 'AR', 'Australia': 'AU', 
           'Austria': 'AT', 'Azerbaijan': 'AZ', 'Bahrain': 'BH', 'Bangladesh': 'BD', 'Belarus': 'BY', 'Belgium': 'BE', 'Belize': 'BZ', 
@@ -190,6 +218,12 @@ export default {
       "paging": false,
     });
 
+    $('#yearTable').DataTable({
+      order: [[ 1, "desc" ]],
+      "dom": '<"toolbar">',
+      "paging": false,
+    });
+
 
     $("#selectAllGenes").click( function(e) {
         if ($(this).is( ":checked" )) {
@@ -205,6 +239,12 @@ export default {
         console.log(selected[i][13]);
       }
     });
+
+    $('#hist-tab').on('click', e=> {
+      setTimeout(()=>{
+        this.$refs.gchartHist.drawChart();
+      }, 500);
+    })
   },
   watch: {
 
@@ -242,11 +282,14 @@ export default {
     },
     buildGeoMap() {
         var results = [['Country', 'Sequences']];
+        var yearHist = [['Collection Date', 'Sequences']];
         var counts = {};
+        var yearCounts = {};
         var tableCounts = {};
 
         for(var v of this.viruses) {
           var country_code = this.country_codes[v.country];
+          var year = v.collection_date;
 
           if(country_code in counts) {
             counts[country_code]++;
@@ -257,14 +300,26 @@ export default {
             counts[country_code] = 1;
             tableCounts[v.country] = 1;
           }
+
+          // Year data
+          if(year in yearCounts) {
+            yearCounts[year]++;
+          } else {
+            yearCounts[year] = 1;
+          }
         }
 
         for(var k in counts) {
           results.push([k, counts[k]])
         }
+        
+        for(var k in yearCounts) {
+          yearHist.push([k, yearCounts[k]])
+        }
 
         this.chartData = results;
         this.chartTableData = tableCounts;
+        this.yearData = yearHist;
     },
     getMapCounts(gene_symbols = null, proteins = null, hosts = null, countries = null, years = null) {
       axios.post("/api/map/by_criteria/" + this.specimen, {
@@ -277,7 +332,6 @@ export default {
           var results = [['Country', 'Sequences']];
           results = results.concat(response.data);
           this.chartData = results;
-          console.log(this.chartData)
       })
     }
   }
