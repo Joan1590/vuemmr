@@ -10,9 +10,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "epic-spinners": "^1.0.4",
+    "file-saver": "^2.0.1",
     "vue": "^2.6.6",
     "vue-google-charts": "^0.3.2",
     "vue-router": "^3.0.1",
+    "vue-select2": "^0.2.6",
     "vue-spinner": "^1.0.3"
   },
   "devDependencies": {

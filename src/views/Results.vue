@@ -6,7 +6,8 @@
   Found {{viruses ? viruses.length : "..."}} results <span v-if="search_type=='accession'">for the accession number {{accession_num}}</span></h5>
   <div v-if="search_type=='custom'">
         Search criteria: 
-        <span class="badge badge-primary">{{specimen.split("_")[0]}}</span>
+        <span class="badge badge-primary">{{specimen.split("_")[0]}}</span>&nbsp;
+        <span class="badge badge-success">{{sequence_type == "prot" ? "Proteins" : "Genes"}}</span>
         <span class="badge badge-light">Gene Symobols:</span>&nbsp;<span class="crit">{{gene_symbols ? gene_symbols.join(", ") : "(Any)"}}</span>&nbsp;
         <span class="badge badge-light">Proteins:</span>&nbsp;<span class="crit">{{proteins ? proteins.join(", ") : "(Any)"}}</span>&nbsp;
         <span class="badge badge-light">Hosts:</span>&nbsp;<span class="crit">{{hosts ? hosts.join(", ") : "(Any)"}}</span>&nbsp;
@@ -47,43 +48,46 @@
         <thead>
         <tr>
             <th><input type="checkbox" id="selectAllGenes" /></th>
-            <th>Gene Product Name</th>
-            <th>Gene Symbol</th>
-            <th>GenBank Genome Accession</th>
-            <th>GenBank Protein Aaccession</th>
+            <th>id</th>
+            <th>Gene Product<br> Name</th>
+            <th>Gene<br> Symbol</th>
+            <th>GenBank Genome<br> Accession</th>
+            <th>GenBank Protein<br> Aaccession</th>
             <th>Strain Name</th>
-            <th>Protein</th>
-            <th>Collection Date</th>
+            <th>Collection<br> Date</th>
             <th>Host</th>
             <th>Country</th>
-            <th>Sequence Type</th>
-            <th>CDS</th>
-            <th>Virus Specimen</th>
             <th>Sequence</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="virus in viruses" v-bind:key="virus.id">
             <td></td>
+            <td>{{ virus.id }}</td>
             <td>{{ virus.gene_product_name }}</td>
             <td>{{ virus.gene_symbol }}</td>
             <td>{{ virus.genbank_genome_accession }}</td>
             <td>{{ virus.genbank_protein_accession }}</td>
             <td>{{ virus.strain_name }}</td>
-            <td>{{ virus.protein }}</td>
             <td>{{ virus.collection_date }}</td>
             <td>{{ virus.host }}</td>
             <td>{{ virus.country }}</td>
-            <td>{{ virus.sequence_type }}</td>
-            <td>{{ virus.cds }}</td>
-            <td>{{ virus.virus_specimen }}</td>
-            <td>{{ virus.sequence }}</td>
+            <td>{{ virus.fasta }}</td>
         </tr>
         </tbody>
     </table>
     <br>
     <br>
-    <button id="download" type="button" class="btn btn-primary"><i class="fa fa-download"></i> Download Selected Genes</button>
+    <button @click="msaMuscleLink('muscle')" class="btn btn-primary">
+      <i class="fas fa-align-center"></i> Multiple Sequence Alignment (MUSCLE)
+    </button>
+    &nbsp;
+    <button @click="msaMuscleLink('clustalo')" class="btn btn-primary">
+      <i class="fas fa-align-center"></i> Multiple Sequence Alignment (ClustalOmega)
+    </button>
+    &nbsp;
+    <button  @click="downloadSelected()" id="download" type="button" class="btn btn-primary">
+      <i class="fa fa-download"></i> Download Selected Genes</button>
    </section>
 
   </div>
@@ -102,7 +106,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="data in chartData.slice(1)" v-bind:key="data[0]" :class="{'table-secondary':(data[0] == 'N/A')}">
+                    <tr v-for="data in chartData.slice(1)" v-bind:key="data[0]" :class="{'table-secondary':(data[0] == 'Unknown')}">
                         <td>{{data[0]}}</td>
                         <td>{{data[1]}}</td>
                     </tr>
@@ -147,6 +151,7 @@
 import axios from 'axios'
 import { GChart } from 'vue-google-charts'
 import { HollowDotsSpinner } from 'epic-spinners'
+import { saveAs } from 'file-saver';
 
 export default {
   name: "results",
@@ -154,10 +159,11 @@ export default {
     GChart,
     HollowDotsSpinner
   },
-  props: ['search_type', 'accession_num', 'specimen', 'gene_symbols', 'proteins', 'hosts', 'countries', 'years'],
+  props: ['search_type', 'sequence_type', 'accession_num', 'specimen', 'gene_symbols', 'proteins', 'hosts', 'countries', 'years'],
   data () {
     return {
         viruses: null,
+        genesTable: null,
         chartData: [['Country', 'Popularity']],
         chartTableData: {},
         chartOptions: {
@@ -167,7 +173,7 @@ export default {
         },
         yearData: {},
         isLoadingResult: true,
-        country_codes: {'Afghanistan': 'AF', 'Albania': 'AL', 'Algeria': 'DZ', 'Angola': 'AO', 'Argentina': 'AR', 'Australia': 'AU', 
+        country_codes: {null: 'Unknown', 'Afghanistan': 'AF', 'Albania': 'AL', 'Algeria': 'DZ', 'Angola': 'AO', 'Argentina': 'AR', 'Australia': 'AU', 
           'Austria': 'AT', 'Azerbaijan': 'AZ', 'Bahrain': 'BH', 'Bangladesh': 'BD', 'Belarus': 'BY', 'Belgium': 'BE', 'Belize': 'BZ', 
           'Benin': 'BJ', 'Bolivia': 'BO', 'Bosnia_and_Herzegovina': 'BA', 'Botswana': 'BW', 'Brazil': 'BR', 'Brunei': 'BN', 'Bulgaria': 'BG',
           'Burkina_Faso': 'BF', 'Cambodia': 'CO', 'Cameroon': 'CM', 'Canada': 'CA', 'Central_African_Republic': 'CF', 'Chile': 'CL',
@@ -192,6 +198,8 @@ export default {
     this.fetchData();
   },
   updated: function () {
+    $.fn.dataTable.ext.errMode = 'none';
+
     var genesTable = $('#myTable').DataTable({
       columnDefs: [ {
         orderable: false,
@@ -199,7 +207,7 @@ export default {
         targets: 0
       },
       {
-        targets: [ 13 ],
+        targets: [ 1, 10 ],
         visible: false,
         searchable: false
       }
@@ -208,9 +216,11 @@ export default {
           style:    'multi',
           selector: 'td:first-child'
       },
-      order: [[ 1, "desc" ]],
+      order: [[ 2, "asc" ]],
       responsive: true
     });
+
+    this.genesTable = genesTable;
 
     $('#seqTable').DataTable({
       order: [[ 1, "desc" ]],
@@ -232,13 +242,7 @@ export default {
             genesTable.rows().deselect(); 
         }
     });
-    
-    $("#download").click( function(e) {
-      var selected = genesTable.rows('.selected').data();
-      for (var i = 0; i < selected.length; i++) {
-        console.log(selected[i][13]);
-      }
-    });
+
 
     $('#hist-tab').on('click', e=> {
       setTimeout(()=>{
@@ -261,6 +265,41 @@ export default {
             break;
         }
     },
+    msaMuscleLink(algo) {
+      var ids = [];
+      var selected = this.genesTable.rows('.selected').data();
+
+      if(selected.length < 2) {
+        alert("Please select at least 2 sequence from the table.")
+        return false;
+      } else if (selected.length > 10) {
+        alert("You can select a maximum of 10 sequences for the alignment.")
+        return false;
+      }
+
+      for (var i = 0; i < selected.length; i++) {
+        ids.push(parseInt(selected[i][1]));
+      }
+
+      var link = this.$router.resolve({ path: 'msa', query: {algo: algo, ids: ids } });
+      window.open(link.href, '_blank');
+    },
+    downloadSelected() {
+      var fasta = [];
+      var selected = this.genesTable.rows('.selected').data();
+
+      if(selected.length == 0) {
+        alert("Please select at least 1 sequence from the table.")
+        return;
+      }
+
+      for (var i = 0; i < selected.length; i++) {
+        fasta.push(selected[i][10].replace("&gt;", ">"));
+      }
+
+      var blob = new Blob([fasta.join("\n\n")], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, "mmrdb_fasta.txt");
+    },
     getVirusesByAccession(accessionNum) {
         axios.get("/api/viruses/search/by_accession/" + accessionNum).then(response=>{
             this.viruses = response.data;
@@ -268,7 +307,7 @@ export default {
         })
     },
     getVirusesCustom() {
-      axios.post("/api/viruses/search/by_criteria/" + this.specimen, {
+      axios.post("/api/viruses/search/by_criteria/" + this.sequence_type + "/" + this.specimen, {
         gene_symbol: this.gene_symbols,
         protein: this.proteins,
         host: this.hosts,
@@ -290,6 +329,7 @@ export default {
         for(var v of this.viruses) {
           var country_code = this.country_codes[v.country];
           var year = v.collection_date;
+          year = year == null ? "Unknown" : year;
 
           if(country_code in counts) {
             counts[country_code]++;

@@ -30,50 +30,59 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Sequence Type</label>
+                    <div class="col-sm-10">
+                        <div id="virusSelector" class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label @click="setSequenceType('nucl')" class="btn btn-secondary active">
+                                <input type="radio" name="options" id="opt-mumps" autocomplete="off" checked> Genes
+                            </label>
+                            <label @click="setSequenceType('prot')" class="btn btn-secondary">
+                                <input type="radio" name="options" id="opt-measles" autocomplete="off"> Proteins
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div id="containi">
-                <div class="row" id="navi" v-bind:class="{ disabledClass: isLodaingCriteria }">
-                    <div class="col">
-                        <label for="xyzw1" class="col-form-label">Gene Symbol</label>
+                    <div class="row">
+                      <div class="col-6">
                         
-                        <select multiple="multiple" class="form-control" id="selGeneSymbol" @click="setCriteria()" size="7">
-                          <option>(Any)</option>
+                        <label class="col-form-label">Gene Symbol <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
+                        </div></label>
+                        
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple="multiple" id="selGeneSymbol" size="1">
                           <option v-for="gs in criteria.gene_symbol" v-bind:key="gs">{{gs}}</option>
                         </select>
-                    </div>
-                    <div class="col">
-                        <label for="xyzw1" class="col-form-label">Protein</label>
-                        <select multiple class="form-control" id="selProtein" @click="setCriteria()"  size="7">
-                            <option>(Any)</option>
+                      </div>
+                    <div class="col-6">
+                        <label class="col-form-label">Protein <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
+                        </div></label>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selProtein" size="1">
                             <option v-for="prot in criteria.protein" v-bind:key="prot">{{prot}}</option>
                         </select>
                     </div>
-                    <div class="col">
-                        <label for="xyzw1" class="col-form-label">Host</label>
-                        <select multiple class="form-control" id="selHost" @click="setCriteria()" size="7">
-                            <option>(Any)</option>
+                    <div class="col-6">
+                        <label for="xyzw1" class="col-form-label">Host <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
+                        </div></label>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selHost" size="1">
                             <option v-for="host in criteria.host" v-bind:key="host">{{host}}</option>
                         </select>
                     </div>
-                    <div class="col">
-                        <label for="xyzw1" class="col-form-label">Country</label>
-                        <select multiple class="form-control" id="selCountry" @click="setCriteria()"  size="7">
-                            <option>(Any)</option>
+                    <div class="col-6">
+                        <label for="xyzw1" class="col-form-label">Country <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
+                        </div></label>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selCountry"  size="1">
                             <option v-for="country in criteria.country" v-bind:key="country">{{country}}</option>
                         </select>
                     </div>
-                    <div class="col">
-                        <label for="xyzw1" class="col-form-label">Collection Date</label>
-                        <select multiple class="form-control" id="selYear" @click="setCriteria()"  size="7">
-                            <option>(Any)</option>
+                    <div class="col-6">
+                        <label for="xyzw1" class="col-form-label">Collection Date <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
+                        </div></label>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selYear" size="1">
                             <option v-for="year in criteria.collection_date" v-bind:key="year">{{year}}</option>
                         </select>
                     </div>
-                </div>
-                <flower-spinner id="infoi" v-if="isLodaingCriteria"
-                  :animation-duration="1500"
-                  :size="70"
-                  :color="'#00d961'"
-                />
+                    </div>
                 </div>
                 <br>
                 <div class="row">
@@ -82,6 +91,7 @@
                       name: 'results', 
                       params: {
                         specimen: specimen,
+                        sequence_type: sequence_type,
                         search_type: 'custom', 
                         gene_symbols: criteria_selection.gene_symbols, 
                         proteins: criteria_selection.proteins, 
@@ -90,11 +100,10 @@
                         years: criteria_selection.years, 
                         } 
                       }" class="btn btn-primary">
-                      <span v-if="!isLodaingResultsCount">
-                        <i class="fa fa-search"></i>  Search for {{specimen.replace("_", " ") + "es"}} <span style="font-weight: bold">({{num_virus}} results)</span>
-                      </span>
-                      <span v-if="isLodaingResultsCount">
-                        <fulfilling-bouncing-circle-spinner :animation-duration="2000" :size="24" :color="'#ffffff'"/>
+                      <span>
+                        <i class="fa fa-search"></i>  Search for {{specimen.replace("_", " ") + "es"}} 
+                        <span style="font-weight: bold" v-if="!isLodaingResultsCount">({{num_virus}} results)</span>
+                      <div v-if="isLodaingResultsCount" class="spinner-border text-light spinner-border-sm" role="status"></div>
                       </span>
                     </router-link>
                     </div>
@@ -177,14 +186,13 @@
 
 <script>
 import axios from 'axios'
-import {FlowerSpinner, FulfillingBouncingCircleSpinner} from 'epic-spinners'
+import {LoopingRhombusesSpinner} from 'epic-spinners'
 
 // @ is an alias to /src
 export default {
   name: "search",
   components: {
-    FlowerSpinner,
-    FulfillingBouncingCircleSpinner
+    LoopingRhombusesSpinner
   },
   data () {
     return {
@@ -192,6 +200,7 @@ export default {
       isLodaingResultsCount: true,
       accession_num: "",
       specimen: "Mumps_virus",
+      sequence_type: "nucl",
       num_virus: 0,
       criteria: {
         gene_symbols: null,
@@ -212,6 +221,15 @@ export default {
   created () {
     this.fetchData()
   },
+  updated () {
+    $('.select2Crit').select2({
+      "placeholder": "(Any)"
+    });
+
+    $('.select2Crit').on('select2:closing',e => {
+      this.setCriteria();
+    });
+  },
   watch: {
 
   },
@@ -224,17 +242,16 @@ export default {
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
-    loadCriteria (specimen) {
-      axios.post("/api/viruses/search_criteria/" + specimen).then(response=>{
+    loadCriteria (sequence_type, specimen) {
+      axios.post("/api/viruses/search_criteria/" + sequence_type + "/" + specimen).then(response=>{
         this.criteria = response.data;
-        this.sleep(500)
          this.sleep(500).then( ()=>{
         this.isLodaingCriteria = false;});
       })
     },
     getCriteriaResultCount(gene_symbols = null, proteins = null, hosts = null, countries = null, years = null) {
       this.isLodaingResultsCount = true;
-      axios.post("/api/viruses/search_criteria/result_count/" + this.specimen, {
+      axios.post("/api/viruses/search_criteria/result_count/" + this.sequence_type + "/" + this.specimen, {
         gene_symbol: gene_symbols,
         protein: proteins,
         host: hosts,
@@ -247,7 +264,7 @@ export default {
       })
     },
     fetchData () {
-      this.loadCriteria("Mumps_virus")
+      this.loadCriteria("nucl", "Mumps_virus")
       this.getCriteriaResultCount()
       this.resetSelection()
     },
@@ -266,13 +283,12 @@ export default {
       this.criteria_selection.countries = con;
       this.criteria_selection.years = yea;
       
-      this.getCriteriaResultCount(sym, pro, hos, con, yea)
+      this.getCriteriaResultCount(sym, pro, hos, con, yea);
     },
     getSelectedValue(selector) {
-      if($(selector).val().includes("(Any)")|| $(selector).val().length == 0)
+      if($(selector).val().length == 0)
       {
         $(selector + " option:selected").prop("selected", false);
-        $(selector).val("(Any)");
         return null;
       }
       return $(selector).val();
@@ -281,13 +297,20 @@ export default {
       for(var selector of ["#selGeneSymbol", "#selProtein", "#selHost", "#selCountry", "#selYear"])
       {
         $(selector + " option:selected").prop("selected", false);
-        $(selector).val("(Any)");
       }
+    },
+    setSequenceType(sequence_type) {
+      this.isLodaingCriteria = true;
+      this.sequence_type = sequence_type;
+      this.loadCriteria(sequence_type, this.specimen)
+      this.getCriteriaResultCount()
+      this.resetSelection()
+      this.setCriteria()
     },
     setSpecimen(specimen) {
       this.isLodaingCriteria = true;
       this.specimen = specimen
-      this.loadCriteria(specimen)
+      this.loadCriteria(this.sequence_type, specimen)
       this.getCriteriaResultCount()
       this.resetSelection()
       this.setCriteria()
@@ -332,12 +355,5 @@ export default {
   padding-bottom: 5px;
 }
 
-.disabledClass {
-  background-color: #f0f0f0;
-}
-
-.disabledClass select {
-  background-color: #f0f0f0
-}
 </style>
 
