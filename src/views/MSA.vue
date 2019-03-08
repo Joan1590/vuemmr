@@ -2,7 +2,7 @@
 <section style="padding: 4rem 2rem">
 <h5><a href="/">
   <i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;
-  <a href="#/search"><i class="fa fa-search"></i> Multiple Sequence Alignment ({{algo.toUpperCase()}})</a>
+  <i class="fa fa-search"></i> Multiple Sequence Alignment ({{algo.toUpperCase()}})
 </h5>
 <br>
 
@@ -61,7 +61,6 @@ export default {
       this.multipleSequenceAlignment(this.algo, this.ids);
     },
     multipleSequenceAlignment(algo, ids) {
-      console.log(ids)
       axios.post("/api/algo/msa/" + algo, ids).then(response=>{
         if(algo == "muscle") {
           this.msaResult = response.data;

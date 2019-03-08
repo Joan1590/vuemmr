@@ -18,13 +18,13 @@
                     <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Virus Specimen</label>
                     <div class="col-sm-10">
                         <div id="virusSelector" class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label @click="setSpecimen('Mumps_virus')" class="btn btn-secondary active">
+                            <label @click="setSpecimen('Mumps_virus')" class="btn btn-primary active">
                                 <input type="radio" name="options" id="opt-mumps" autocomplete="off" checked> Mumps
                             </label>
-                            <label @click="setSpecimen('Measles_virus')" class="btn btn-secondary">
+                            <label @click="setSpecimen('Measles_virus')" class="btn btn-primary">
                                 <input type="radio" name="options" id="opt-measles" autocomplete="off"> Measles
                             </label>
-                            <label @click="setSpecimen('Rubella_virus')" class="btn btn-secondary">
+                            <label @click="setSpecimen('Rubella_virus')" class="btn btn-primary">
                                 <input type="radio" name="options" id="opt-rubella" autocomplete="off"> Rubella
                             </label>
                         </div>
@@ -45,41 +45,46 @@
                 </div>
                 <div id="containi">
                     <div class="row">
-                      <div class="col-6">
+                      <div class="col-3">
                         
                         <label class="col-form-label">Gene Symbol <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
                         </div></label>
                         
-                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple="multiple" id="selGeneSymbol" size="1">
-                          <option v-for="gs in criteria.gene_symbol" v-bind:key="gs">{{gs}}</option>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple="multiple" id="selGeneSymbol" size="5">
+                          <option>(Any)</option>
+                          <option v-for="gs in criteria.gene_symbol" v-if="gs != null" v-bind:key="gs">{{gs}}</option>
                         </select>
                       </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <label class="col-form-label">Protein <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
                         </div></label>
-                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selProtein" size="1">
-                            <option v-for="prot in criteria.protein" v-bind:key="prot">{{prot}}</option>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selProtein" size="5">
+                          <option>(Any)</option>
+                            <option v-for="prot in criteria.protein" v-if="prot != null" v-bind:key="prot">{{prot}}</option>
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <label for="xyzw1" class="col-form-label">Host <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
                         </div></label>
-                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selHost" size="1">
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selHost" size="5">
+                            <option>(Any)</option>
                             <option v-for="host in criteria.host" v-bind:key="host">{{host}}</option>
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <label for="xyzw1" class="col-form-label">Country <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
                         </div></label>
-                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selCountry"  size="1">
-                            <option v-for="country in criteria.country" v-bind:key="country">{{country}}</option>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selCountry"  size="5">
+                            <option>(Any)</option>
+                            <option v-for="country in criteria.country" v-if="country != null" v-bind:key="country">{{country}}</option>
                         </select>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
                         <label for="xyzw1" class="col-form-label">Collection Date <div v-if="isLodaingCriteria" class="spinner-border spinner-border-sm" role="status">
                         </div></label>
-                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selYear" size="1">
-                            <option v-for="year in criteria.collection_date" v-bind:key="year">{{year}}</option>
+                        <select :disabled="isLodaingCriteria" class="select2Crit form-control" multiple id="selYear" size="5">
+                            <option>(Any)</option>
+                            <option v-for="year in criteria.collection_date" v-if="year != null" v-bind:key="year">{{year}}</option>
                         </select>
                     </div>
                     </div>
@@ -125,27 +130,8 @@
             <div class="card-body">
                 <form>
                     <div class="form-group row">
-                        <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Sequence Type</label>
-                        <div class="col-sm-10">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Gene Sequence
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> Protein Sequence
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Search Criteria</label>
-                        <div class="col-sm-10">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter the gene sequnce here"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <div class="col-sm-12">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search for MMR Viruses</button>
+                        <a href="/blast" target="_blank" type="submit" class="btn btn-primary">Go to BLAST Search <i class="fas fa-external-link-square-alt"></i></a>
                         </div>
                     </div>
                 </form>
@@ -222,11 +208,11 @@ export default {
     this.fetchData()
   },
   updated () {
-    $('.select2Crit').select2({
+   /* $('.select2Crit').select2({
       "placeholder": "(Any)"
-    });
+    });*/
 
-    $('.select2Crit').on('select2:closing',e => {
+    $('.select2Crit').on('change',e => {
       this.setCriteria();
     });
   },
@@ -245,6 +231,7 @@ export default {
     loadCriteria (sequence_type, specimen) {
       axios.post("/api/viruses/search_criteria/" + sequence_type + "/" + specimen).then(response=>{
         this.criteria = response.data;
+        
          this.sleep(500).then( ()=>{
         this.isLodaingCriteria = false;});
       })
@@ -260,7 +247,7 @@ export default {
       }).then(response=>{  
         this.num_virus = response.data
         this.sleep(500).then( ()=>{
-        this.isLodaingResultsCount = false});
+          this.isLodaingResultsCount = false;});
       })
     },
     fetchData () {
@@ -286,9 +273,10 @@ export default {
       this.getCriteriaResultCount(sym, pro, hos, con, yea);
     },
     getSelectedValue(selector) {
-      if($(selector).val().length == 0)
+      if($(selector).val().includes("(Any)")|| $(selector).val().length == 0)
       {
         $(selector + " option:selected").prop("selected", false);
+        $(selector).val("(Any)");
         return null;
       }
       return $(selector).val();
@@ -297,6 +285,7 @@ export default {
       for(var selector of ["#selGeneSymbol", "#selProtein", "#selHost", "#selCountry", "#selYear"])
       {
         $(selector + " option:selected").prop("selected", false);
+        $(selector).val("(Any)");
       }
     },
     setSequenceType(sequence_type) {
