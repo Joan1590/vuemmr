@@ -12,7 +12,7 @@
               <router-link to="/search" class="btn btn-primary">Go to Search</router-link>
           </div>
       </div>
-      <div class="card">
+      <div class="card" style="opacity: 0.5;">
           <img src="../assets/comingsoon.jpg" width="348" height="325" class="card-img-top">
           <div class="card-body">
           <h5 class="card-title"><i class="fa fa-chart-bar"></i> Analyze</h5>
@@ -23,7 +23,7 @@
           </div>
       </div>
 
-      <div class="card">
+      <div class="card" style="opacity: 0.5;">
           <img src="../assets/comingsoon.jpg" width="348" height="325" class="card-img-top">
           <div class="card-body">
           <h5 class="card-title"><i class="fa fa-dna"></i> Antigenic Epitopes</h5>
