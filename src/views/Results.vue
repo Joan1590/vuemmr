@@ -34,7 +34,7 @@
     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Results (Table)</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">World Map Distribution</a>
+    <a class="nav-link" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="false">World Map Distribution</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" id="hist-tab" data-toggle="tab" href="#hist" role="tab" aria-controls="hist" aria-selected="false">Collection Date Distribution</a>
@@ -91,13 +91,13 @@
    </section>
 
   </div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="width:100%">
+  <div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab" style="width:100%">
     <br>
-    <div class="row">
-        <div class="col-9">
-        <GChart v-if="chartData" :resizeDebounce="500" type="GeoChart" :data="chartData" :options="chartOptions" :settings="{packages: ['corechart', 'table'], mapsApiKey:'AIzaSyCqaPSmctfwgNKG5GE2DN3JMMGYDFItgQQ'}"/>
+    <div v-if="chartTableData" class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-9">
+        <GChart ref="gchartMap" v-if="chartData" :resizeDebounce="500" type="GeoChart" :data="chartData" :options="chartOptions" :settings="{packages: ['corechart', 'table'], mapsApiKey:'AIzaSyCqaPSmctfwgNKG5GE2DN3JMMGYDFItgQQ'}"/>
         </div>
-        <div class="col-3">
+        <div class="col-xs-12 col-sm-12 col-lg-3">
             <table class="table table-sm" id="seqTable">
                 <thead>
                     <tr>
@@ -106,9 +106,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="data in chartData.slice(1)" v-bind:key="data[0]" :class="{'table-secondary':(data[0] == 'Unknown')}">
-                        <td>{{data[0]}}</td>
-                        <td>{{data[1]}}</td>
+                    <tr v-for="(val, key) in chartTableData" v-bind:key="key" :class="{'table-secondary':(key == 'Unknown')}">
+                        <td>{{key}} ({{country_codes[key]}})</td>
+                        <td>{{val}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -117,11 +117,11 @@
   </div>
   <div class="tab-pane fade" id="hist" role="tabpanel" aria-labelledby="hist-tab" style="width:100%">
     <br>
-    <div class="row">
-        <div class="col-9">
+    <div v-if="yearData" class="row">
+        <div class="col-xs-12 col-sm-12 col-lg-9">
         <GChart ref="gchartHist" v-if="yearData" type="ColumnChart" :data="yearData" :options="chartOptions" :settings="{packages: ['corechart']}"/>
         </div>
-        <div class="col-3">
+        <div class="col-xs-12 col-sm-12 col-lg-3">
             <table class="table table-sm" id="yearTable">
                 <thead>
                     <tr>
@@ -165,15 +165,15 @@ export default {
         viruses: null,
         genesTable: null,
         chartData: [['Country', 'Popularity']],
-        chartTableData: {},
+        chartTableData: false,
         chartOptions: {
           height: 600,
           datalessRegionColor: "#fcfcfc",
           colorAxis: {colors: ['lightblue', 'green']}
         },
-        yearData: {},
+        yearData: false,
         isLoadingResult: true,
-        country_codes: {null: 'Unknown', 'Afghanistan': 'AF', 'Albania': 'AL', 'Algeria': 'DZ', 'Angola': 'AO', 'Argentina': 'AR', 'Australia': 'AU', 
+        country_codes: {null: 'Unknown', 'Unknown': 'Unknown', 'Afghanistan': 'AF', 'Albania': 'AL', 'Algeria': 'DZ', 'Angola': 'AO', 'Argentina': 'AR', 'Australia': 'AU', 
           'Austria': 'AT', 'Azerbaijan': 'AZ', 'Bahrain': 'BH', 'Bangladesh': 'BD', 'Belarus': 'BY', 'Belgium': 'BE', 'Belize': 'BZ', 
           'Benin': 'BJ', 'Bolivia': 'BO', 'Bosnia_and_Herzegovina': 'BA', 'Botswana': 'BW', 'Brazil': 'BR', 'Brunei': 'BN', 'Bulgaria': 'BG',
           'Burkina_Faso': 'BF', 'Cambodia': 'CO', 'Cameroon': 'CM', 'Canada': 'CA', 'Central_African_Republic': 'CF', 'Chile': 'CL',
@@ -247,6 +247,12 @@ export default {
     $('#hist-tab').on('click', e=> {
       setTimeout(()=>{
         this.$refs.gchartHist.drawChart();
+      }, 500);
+    })
+
+    $('#map-tab').on('click', e=> {
+      setTimeout(()=>{
+        this.$refs.gchartMap.drawChart();
       }, 500);
     })
   },
@@ -328,17 +334,18 @@ export default {
 
         for(var v of this.viruses) {
           var country_code = this.country_codes[v.country];
+          var country_name = v.country == null ? "Unknown" : v.country;
           var year = v.collection_date;
           year = year == null ? "Unknown" : year;
 
           if(country_code in counts) {
             counts[country_code]++;
-            tableCounts[v.country]++;
+            tableCounts[country_name]++;
           }
           else
           {
             counts[country_code] = 1;
-            tableCounts[v.country] = 1;
+            tableCounts[country_name] = 1;
           }
 
           // Year data
