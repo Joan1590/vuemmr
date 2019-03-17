@@ -2,6 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 import Search from "./views/Search.vue";
 import Home from "./views/Home.vue";
+import About from "./views/About.vue";
+import Links from "./views/Links.vue";
 import Results from "./views/Results.vue";
 import MSA from "./views/MSA.vue";
 
@@ -30,6 +32,18 @@ export default new Router({
       path: "/msa",
       name: "msa",
       component: MSA,
+      props: true
+    },
+    {
+      path: "/about",
+      name: "about",
+      component: About,
+      props: true
+    },
+    {
+      path: "/links",
+      name: "links",
+      component: Links,
       props: true
     },
   ]

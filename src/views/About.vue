@@ -1,5 +1,12 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+ <section class="jumbotron vertical-center main">
+  <div class="container">
+    <h1>Contact Us</h1><br>
+    <i class="fa fa-user"></i>&nbsp;<b>Iman Almansour, PhD.</b><br/>
+    <img src="../assets/email.png"><br>
+    <i>Assistant Professor</i><br/>
+    Epidemic Diseases Department, Institute for Research and Medical Consultations <br/>
+    Imam Abdulrahman Bin Faisal University     
   </div>
+</section>
 </template>
