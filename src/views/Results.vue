@@ -78,17 +78,46 @@
     </table>
     <br>
     <br>
+
     <button @click="msaMuscleLink('muscle')" class="btn btn-primary">
       <i class="fas fa-align-center"></i> Multiple Sequence Alignment (MUSCLE)
     </button>
     &nbsp;
-    <button @click="msaMuscleLink('clustalo')" class="btn btn-primary">
+    <button @click="configureMview()" type="button" class="btn btn-primary">
       <i class="fas fa-align-center"></i> Multiple Sequence Alignment (ClustalOmega)
     </button>
     &nbsp;
     <button  @click="downloadSelected()" id="download" type="button" class="btn btn-primary">
       <i class="fa fa-download"></i> Download Selected Genes</button>
    </section>
+   &nbsp;
+
+   
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalConfig" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Configure ClustalOmega Sequence Alignment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input id="chkConsensus" type="checkbox" v-model="mview_consensus" />&nbsp;<label for="chkConsensus">Show Consensus</label>
+          <div>Select the reference sequence:</div>
+          <div v-for="r in selectedRows" v-bind:key="r.id">
+            <input type="radio" v-bind:value="r.id" name="referenceForMview"> {{r.title}}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" @click="msaMuscleLink('mview')" class="btn btn-primary" data-dismiss="modal">Run Alignment</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   </div>
   <div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab" style="width:100%">
@@ -162,6 +191,9 @@ export default {
   props: ['search_type', 'sequence_type', 'accession_num', 'specimen', 'gene_symbols', 'proteins', 'hosts', 'countries', 'years'],
   data () {
     return {
+        mview_consensus: false,
+        mview_reference: -1,
+        selectedRows: [],
         viruses: null,
         genesTable: null,
         chartData: [['Country', 'Popularity']],
@@ -287,8 +319,44 @@ export default {
         ids.push(parseInt(selected[i][1]));
       }
 
-      var link = this.$router.resolve({ path: 'msa', query: {algo: algo, ids: ids } });
+      if(algo == "mview") {
+        var refid = parseInt($("input:radio[name=referenceForMview]:checked").val());
+        if(refid) {
+          var index = ids.indexOf(refid);
+          if (index !== -1) ids.splice(index, 1);
+          ids.unshift(refid);
+        }
+      }
+
+      var link;
+      if(algo == "mview" && this.mview_consensus) {
+        link = this.$router.resolve({ path: 'msa', query: {algo: algo, ids: ids, consensus: this.mview_consensus } });
+      } else {
+        link = this.$router.resolve({ path: 'msa', query: {algo: algo, ids: ids } });
+      }
       window.open(link.href, '_blank');
+    },
+    configureMview(){
+      var rows = [];
+      var ids = [];
+      var selected = this.genesTable.rows('.selected').data();
+
+      if(selected.length < 2) {
+        alert("Please select at least 2 sequence from the table.")
+        return false;
+      } else if (selected.length > 10) {
+        alert("You can select a maximum of 10 sequences for the alignment.")
+        return false;
+      }
+
+      for (var i = 0; i < selected.length; i++) {
+        rows.push({id: parseInt(selected[i][1]), 
+          title: selected[i][4]});
+      }
+
+      this.selectedRows = rows;
+
+      $('#modalConfig').modal('toggle')
     },
     downloadSelected() {
       var fasta = [];
