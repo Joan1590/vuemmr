@@ -63,10 +63,10 @@ export default {
     },
     multipleSequenceAlignment(algo, ids, consensus) {
       axios.post("/api/algo/msa/" + algo + "?consensus=" + consensus, ids).then(response=>{
-        if(algo == "muscle") {
-          this.msaResult = response.data;
-        } else {
+        if(algo == "clustalo") {
           this.msaResult = "<pre>" + response.data + "</pre>";
+        } else {
+          this.msaResult = response.data;
         }
         this.isLoadingResult = false;
       })
