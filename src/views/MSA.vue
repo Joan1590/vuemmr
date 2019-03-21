@@ -48,6 +48,7 @@ export default {
   created () {
     this.algo = this.$route.query.algo;
     this.ids = this.$route.query.ids;
+    this.consensus = typeof this.$route.query.consensus !== 'undefined' ? true : false;
 
     this.fetchData();
   },
@@ -58,10 +59,10 @@ export default {
   },
   methods: {
     fetchData(){
-      this.multipleSequenceAlignment(this.algo, this.ids);
+      this.multipleSequenceAlignment(this.algo, this.ids, this.consensus);
     },
-    multipleSequenceAlignment(algo, ids) {
-      axios.post("/api/algo/msa/" + algo, ids).then(response=>{
+    multipleSequenceAlignment(algo, ids, consensus) {
+      axios.post("/api/algo/msa/" + algo + "?consensus=" + consensus, ids).then(response=>{
         if(algo == "muscle") {
           this.msaResult = response.data;
         } else {
