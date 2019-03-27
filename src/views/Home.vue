@@ -5,21 +5,21 @@
       <div class="card">
           <img src="../assets/analysis.png" width="348" height="325" class="card-img-top">
           <div class="card-body">
-          <h5 class="card-title"><i class="fa fa-search"></i> Search</h5>
-          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+          <h5 class="card-title"><i class="fa fa-database"></i> MMRdb Viruses</h5>
+          <p class="card-text">Sequence data, sequence search, MSA alignment, geographical charts, and more.</p>
           </div>
           <div class="card-footer">
-              <router-link to="/search" class="btn btn-primary">Go to Search</router-link>
+              <router-link to="/search" class="btn btn-primary">Go to MMRdb</router-link>
           </div>
       </div>
-      <div class="card" style="opacity: 0.5;">
-          <img src="../assets/comingsoon.jpg" width="348" height="325" class="card-img-top">
+      <div class="card">
+          <img src="../assets/blast.png" width="348" height="325" class="card-img-top">
           <div class="card-body">
-          <h5 class="card-title"><i class="fa fa-chart-bar"></i> Analyze</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <h5 class="card-title"><i class="fa fa-search"></i> BLAST Search</h5>
+          <p class="card-text">Nucleotide and protein BLAST.</p>
           </div>
           <div class="card-footer">
-              <a href="#" class="btn btn-primary  disabled">(Coming Soon)</a>
+              <a href="/blast" target="_blank" class="btn btn-primary">Go to BLAST Search <i class="fas fa-external-link-square-alt"></i></a>
           </div>
       </div>
 
@@ -27,7 +27,7 @@
           <img src="../assets/comingsoon.jpg" width="348" height="325" class="card-img-top">
           <div class="card-body">
           <h5 class="card-title"><i class="fa fa-dna"></i> Antigenic Epitopes</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+          <p class="card-text">B-cell epitopes, T-cell epitopes, linear epitopes and discontinuous epitopes.</p>
           </div>
           <div class="card-footer">
               <a href="#" class="btn btn-primary disabled">(Coming Soon)</a>

@@ -2,7 +2,7 @@
 <section style="padding: 4rem 2rem">
 <h5><a href="/">
   <i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;
-  <a href="#/search"><i class="fa fa-search"></i> <span v-if="search_type=='custom'"> Custom</span> Search</a>&nbsp;<i class="fas fa-chevron-right"></i>
+  <a href="#/search"><i class="fa fa-database"></i> MMRdb viruses</a>&nbsp;<i class="fas fa-chevron-right"></i>
   Found {{viruses ? viruses.length : "..."}} results <span v-if="search_type=='accession'">for the accession number {{accession_num}}</span></h5>
   <div v-if="search_type=='custom'">
         Search criteria: 

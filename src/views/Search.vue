@@ -1,7 +1,7 @@
 <template>
 <section class="jumbotron vertical-center main">
 <div class="container">
-    <h1 class="jumbotron-heading"><a href="/"><i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;<i class="fa fa-search"></i> Search for MMR Viruses</h1>
+    <h1 class="jumbotron-heading"><a href="/"><i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;<i class="fa fa-database"></i> MMRdb Viruses</h1>
     <div class="accordion" id="accordionExample">
         <div class="card">
             <div class="card-header" id="headingTwo">
@@ -102,27 +102,6 @@
                     </router-link>
                     </div>
                 </div>
-                </form>
-            </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Search by Seqeunce
-                </button>
-            </h5>
-            </div>
-        
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-            <div class="card-body">
-                <form>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                        <a href="/blast" target="_blank" type="submit" class="btn btn-primary">Go to BLAST Search <i class="fas fa-external-link-square-alt"></i></a>
-                        </div>
-                    </div>
                 </form>
             </div>
             </div>
