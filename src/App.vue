@@ -1,8 +1,9 @@
 <template>
   <div>  
     <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"><img style="width: 80px;" src="./assets/logo.png">
-        <a class="navbar-brand" href="/">&nbsp; Measles, Mumps and Rubella Database</a>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"><a class="navbar-brand" href="/">
+      <img style="width: 220px;" src="./assets/logo.png">
+       <span class="d-none d-sm-inline">&nbsp; Measles, Mumps and Rubella Database</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,6 +23,8 @@
         </div>
       </nav>
     </header>
+        <div class="d-block d-sm-none" style="width: 100px; height: 50px;"></div>
+        <div class="d-none d-sm-block" style="width: 100px; height: 20px;"></div>
     <main role="main">
       <router-view/>
     </main>
