@@ -23,14 +23,14 @@
           </div>
       </div>
 
-      <div class="card" style="opacity: 0.5;">
+      <div class="card">
           <img src="../assets/card.png" width="348" height="325" class="card-img-top">
           <div class="card-body">
           <h5 class="card-title"><i class="fa fa-dna"></i> Antigenic Epitopes</h5>
           <p class="card-text">B-cell epitopes, T-cell epitopes, linear epitopes and discontinuous epitopes.</p>
           </div>
           <div class="card-footer">
-              <a href="#" class="btn btn-primary disabled">(Coming Soon)</a>
+              <router-link to="/epitopes" class="btn btn-primary">Go to Antigenic Epitopes</router-link>
           </div>
       </div>
       </div>

@@ -6,6 +6,7 @@ import About from "./views/About.vue";
 import Links from "./views/Links.vue";
 import Results from "./views/Results.vue";
 import MSA from "./views/MSA.vue";
+import Epitopes from "./views/Epitopes.vue";
 
 Vue.use(Router);
 
@@ -45,6 +46,11 @@ export default new Router({
       name: "links",
       component: Links,
       props: true
+    },
+    {
+      path: "/epitopes",
+      name: "epitopes",
+      component: Epitopes,
     },
   ]
 });
