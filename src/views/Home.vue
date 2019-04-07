@@ -5,7 +5,7 @@
       <div class="card">
           <img src="../assets/card.png" width="348" height="325" class="card-img-top">
           <div class="card-body">
-          <h5 class="card-title hippy"><i class="fa fa-database"></i> MMRdb Viruses</h5>
+          <h5 class="card-title hippy"><i class="fa fa-database"></i> MMRdb</h5>
           <p class="card-text">Sequence data, sequence search, MSA alignment, Geo Charts, and more.</p>
           </div>
           <div class="card-footer">
