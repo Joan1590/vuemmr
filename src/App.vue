@@ -2,7 +2,7 @@
   <div>  
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"><a class="navbar-brand" href="/">
-       <span class="d-none d-sm-inline"><b>MMRdb</b> | Measles, Mumps, and Rubella Viruses Database and Analysis Resource</span></a>
+      <b>MMRdb</b><span class="d-none d-sm-inline"> | Measles, Mumps, and Rubella Viruses Database and Analysis Resource</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
