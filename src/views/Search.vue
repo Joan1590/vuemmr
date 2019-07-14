@@ -15,7 +15,7 @@
             <div class="card-body">
                 <form> 
                 <div class="form-group row">
-                    <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Virus Specimen</label>
+                    <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Virus Name</label>
                     <div class="col-sm-10">
                         <div id="virusSelector" class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label @click="setSpecimen('Measles_virus')" class="btn btn-primary active">
