@@ -1,7 +1,7 @@
 <template>
 <section class="jumbotron vertical-center main">
 <div class="container">
-    <h1 class="jumbotron-heading"><a href="/"><i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;<i class="fa fa-database"></i> MMRdb</h1>
+    <h3 class="jumbotron-heading"><a href="/"><i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;<i class="fa fa-database"></i> MMRdb</h3>
     <div class="accordion" id="accordionExample">
         <div class="card">
             <div class="card-header" id="headingTwo">
