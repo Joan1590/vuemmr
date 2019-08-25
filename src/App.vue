@@ -1,8 +1,10 @@
 <template>
   <div>  
     <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark"><a class="navbar-brand" href="/">
-      <b>MMRdb</b><span class="d-none d-sm-inline"> | Measles, Mumps, and Rubella Viruses Database and Analysis Resource</span></a>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/"><b>MMRdb</b></a>
+      </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,13 +12,13 @@
             <div class="navbar-nav mr-auto"></div>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <router-link to="/" v-bind:class="[$router.currentRoute.name == 'home' ? 'active' : '', 'nav-link']">Home</router-link>
+              <router-link to="/" v-bind:class="[$router.currentRoute.name == 'home' ? 'active' : '', 'nav-link']"><i class="fa fa-home"></i> Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/links" v-bind:class="[$router.currentRoute.name == 'links' ? 'active' : '', 'nav-link']" class="nav-link">External Links</router-link>
+              <router-link to="/links" v-bind:class="[$router.currentRoute.name == 'links' ? 'active' : '', 'nav-link']" class="nav-link"><i class="fa fa-share-alt"></i> External Links</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/about" v-bind:class="[$router.currentRoute.name == 'about' ? 'active' : '', 'nav-link']" class="nav-link">Contact Us</router-link>
+              <router-link to="/about" v-bind:class="[$router.currentRoute.name == 'about' ? 'active' : '', 'nav-link']" class="nav-link"><i class="fa fa-envelope"></i> Contact Us</router-link>
             </li>
           </ul>
         </div>
@@ -50,4 +52,57 @@
   color: #42b983;
 }
 
+.navbar-header {
+    float: left;
+    text-align: center;
+    width: 70%;
+}
+.navbar-brand {float:none;margin-left: 30%;}
+.nav {
+    background-color: transparent;
+}
+
+.navbar a {
+  text-align: center;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+body{
+  background-image: url('assets/sampl8backok.jpg') !important;
+  background-size: 110%;
+}
+
+.jumbotron{
+  background-color: transparent;
+}
+
+.card{
+  background: transparent;
+  border-color: transparent;
+  text-align: center;
+}
+
+.card-container{
+  padding: 20px;
+  border: 2px solid white;
+  border-radius: 20px;
+}
+
+.card-footer{
+  border: none;
+  background-color: transparent;
+}
+
+.btn-blue{
+  background-color:#34C2D3;
+  border-radius: 5px;
+  border-color: transparent;
+}
+.text-muted {
+    color: white !important;
+    text-align:center;
+}
 </style>
