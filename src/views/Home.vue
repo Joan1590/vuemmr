@@ -1,10 +1,10 @@
 <template>
  <section class="jumbotron vertical-center main">
-  <div class="container">
+  <div class="container text-muted">
       <div class="card-deck">
       <div class="card">
         <div class="card-container">
-          <img src="../assets/sampl8_0002_Vector-Smart-Object.png" width="348" height="325" class="card-img-top">
+          <img src="../assets/sampl8_0002_Vector-Smart-Object.png"  class="card-img-top image-card">
           <div class="card-body">
           <p class="card-text">Sequence data, sequence search, MSA alignment, Geo Charts, and more.</p>
           </div>
@@ -17,7 +17,7 @@
       </div>
       <div class="card">
         <div class="card-container">
-          <img src="../assets/sampl8_0001_Vector-Smart-Object.png" width="348" height="325" class="card-img-top">
+          <img src="../assets/sampl8_0001_Vector-Smart-Object.png" class="card-img-top image-card">
           <div class="card-body">
           <p class="card-text">Nucleotide Blast and Protein &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blast.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
           </div>
@@ -31,7 +31,7 @@
 
       <div class="card">
         <div class="card-container">
-          <img src="../assets/sampl8_0000_Vector-Smart-Object.png" width="348" height="325" class="card-img-top">
+          <img src="../assets/sampl8_0000_Vector-Smart-Object.png" class="card-img-top image-card">
           <div class="card-body">
           
           <p class="card-text">B-cell epitopes, T-cell epitopes, linear epitopes and discontinuous epitopes.</p>
@@ -63,5 +63,9 @@ export default {
 <style>
 .hippy {
   color: white;
+}
+.image-card{
+  width:210px;
+  height:210px;
 }
 </style>

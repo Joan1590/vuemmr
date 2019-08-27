@@ -24,9 +24,12 @@
         </div>
       </nav>
     </header>
-        <div class="d-block d-sm-none" style="width: 100px; height: 50px;"></div>
-        <div class="d-none d-sm-block" style="width: 100px; height: 20px;"></div>
+        <div class="d-block d-sm-none" style="width: 100px; height: 100px;"></div>
+        <div class="d-none d-sm-block" style="width: 100px; height: 100px;"></div>
     <main role="main">
+      <div class="content">
+        <h3 class="text-muted">Measles Mumps and Rubella Viruses Database and Analysis Resource</h3>
+      </div>
       <router-view/>
     </main>
   </div>
@@ -57,7 +60,7 @@
     text-align: center;
     width: 70%;
 }
-.navbar-brand {float:none;margin-left: 30%;}
+.navbar-brand {float:none;    margin-left: 45%;}
 .nav {
     background-color: transparent;
 }
@@ -71,8 +74,14 @@
 }
 
 body{
-  background-image: url('assets/sampl8backok.jpg') !important;
-  background-size: 110%;
+  background: rgba(147,206,222,1);
+background: -moz-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%);
+background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(147,206,222,1)), color-stop(41%, rgba(117,189,209,1)), color-stop(100%, rgba(205,105,214,1)));
+background: -webkit-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%);
+background: -o-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%);
+background: -ms-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%);
+background: linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#cd69d6', GradientType=1 );
 }
 
 .jumbotron{
@@ -85,8 +94,11 @@ body{
   text-align: center;
 }
 
+.card-body{
+  color: white;
+}
 .card-container{
-  padding: 20px;
+  padding-top: 20px;
   border: 2px solid white;
   border-radius: 20px;
 }
@@ -104,5 +116,11 @@ body{
 .text-muted {
     color: white !important;
     text-align:center;
+}
+.btn-link {
+  color: white !important;
+}
+.jumbotron-heading  a{
+  color: white;
 }
 </style>

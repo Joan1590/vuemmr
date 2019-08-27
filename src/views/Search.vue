@@ -18,13 +18,13 @@
                     <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Virus Name</label>
                     <div class="col-sm-10">
                         <div id="virusSelector" class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label @click="setSpecimen('Measles_virus')" class="btn btn-primary active">
+                            <label @click="setSpecimen('Measles_virus')" class="btn btn-primary btn-blue active">
                                 <input type="radio" name="options" id="opt-measles" autocomplete="off" checked> Measles
                             </label>
-                            <label @click="setSpecimen('Mumps_virus')" class="btn btn-primary">
+                            <label @click="setSpecimen('Mumps_virus')" class="btn btn-primary btn-blue">
                                 <input type="radio" name="options" id="opt-mumps" autocomplete="off"> Mumps
                             </label>
-                            <label @click="setSpecimen('Rubella_virus')" class="btn btn-primary">
+                            <label @click="setSpecimen('Rubella_virus')" class="btn btn-primary btn-blue">
                                 <input type="radio" name="options" id="opt-rubella" autocomplete="off"> Rubella
                             </label>
                         </div>
@@ -93,7 +93,7 @@
                         countries: criteria_selection.countries, 
                         years: criteria_selection.years, 
                         } 
-                      }" class="btn btn-primary">
+                      }" class="btn btn-primary btn-blue">
                       <span>
                         <i class="fa fa-search"></i>  Search for {{specimen.replace("_", " ") + "es"}} 
                         <span style="font-weight: bold" v-if="!isLodaingResultsCount">({{num_virus}} results)</span>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                        <router-link :to="{ name: 'results', params: {search_type: 'accession', accession_num: accession_num } }" class="btn btn-primary"><i class="fa fa-search"></i>  Search</router-link>
+                        <router-link :to="{ name: 'results', params: {search_type: 'accession', accession_num: accession_num } }" class="btn btn-primary btn-blue"><i class="fa fa-search"></i>  Search</router-link>
                         </div>
                     </div>
                 </form>

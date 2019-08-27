@@ -1,6 +1,6 @@
 <template>
 <section style="padding: 4rem 2rem">
-<h5><a href="/">
+<h5 class="jumbotron-heading"><a href="/">
   <i class="fa fa-home"></i> Home</a>&nbsp;<i class="fas fa-chevron-right"></i>&nbsp;
  Antigenic Epitopes</h5>
 <br>
@@ -29,11 +29,11 @@
     <a class="nav-link" id="rubella-tab" data-toggle="tab" href="#hist" role="tab" aria-controls="hist" aria-selected="false">Rubella Epitopes</a>
   </li>
 </ul>
-<div class="tab-content" id="mainTabContent">
+<div class="tab-content" id="mainTabContent" style="color: white;">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <br>
     <section>
-    <table id="measles_ep" class="display nowrap table" style="width:100%">
+    <table id="measles_ep" class="display nowrap table" style="width:100%; color: white;">
     </table>
     <br>
     <br>

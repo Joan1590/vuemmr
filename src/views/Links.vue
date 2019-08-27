@@ -1,6 +1,6 @@
 <template>
  <section class="jumbotron vertical-center main">
-  <div class="container">
+  <div class="container text-muted">
     <h1>External Links</h1><br>
 
     The National Center for Biotechnology Information (NCBI)<br>
