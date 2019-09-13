@@ -1,4 +1,4 @@
-<template>
+<template >
  <section class="jumbotron vertical-center main">
   <div class="container text-muted">
       <div class="card-deck">
@@ -61,11 +61,87 @@ export default {
 </script>
 
 <style>
-.hippy {
+.home .hippy {
   color: white;
 }
-.image-card{
+.home .image-card{
   width:210px;
   height:210px;
+}
+
+.home .vertical-center{
+  min-height: 100%;
+}
+
+.home .navbar-header {
+    float: left;
+    text-align: center;
+    width: 70%;
+}
+.home .navbar-brand {float:none;    margin-left: 45%;}
+.home .nav {
+    background-color: transparent;
+}
+
+.home .navbar a {
+  text-align: center;
+  padding: 12px;
+  color: white !important;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.home{
+  background: rgba(147,206,222,1) !important;
+background: -moz-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
+background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(147,206,222,1)), color-stop(41%, rgba(117,189,209,1)), color-stop(100%, rgba(205,105,214,1))) !important;
+background: -webkit-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
+background: -o-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
+background: -ms-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
+background: linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#cd69d6', GradientType=1 ) !important;
+  min-height: 680px;
+}
+
+.home .jumbotron{
+  background-color: transparent;
+  padding: 0px !important;
+
+}
+
+.home .card{
+  background: transparent;
+  border-color: transparent;
+  text-align: center;
+}
+
+.home .card-body{
+  color: white;
+}
+.home .card-container{
+  padding-top: 20px;
+  border: 2px solid white;
+  border-radius: 20px;
+}
+
+.home .card-footer{
+  border: none;
+  background-color: transparent;
+}
+
+.home .btn-blue{
+  background-color:#34C2D3;
+  border-radius: 5px;
+  border-color: transparent;
+}
+.home .text-muted {
+    color: white !important;
+    text-align:center;
+}
+.home .btn-link {
+  color: white !important;
+}
+.home .jumbotron-heading  a{
+  color: white;
 }
 </style>
