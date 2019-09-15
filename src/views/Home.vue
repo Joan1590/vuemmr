@@ -19,7 +19,7 @@
         <div class="card-container">
           <img src="../assets/sampl8_0001_Vector-Smart-Object.png" class="card-img-top image-card">
           <div class="card-body">
-          <p class="card-text">Nucleotide Blast and Protein &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Blast.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          <p class="card-text">Nucleotide Blast and Protein Blast.</p>
           </div>
         </div>
         <br>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <br>
-        <h5 class="card-title hippy"><i class="fa fa-dna"></i> Antigenic Epitopes</h5>
+        <h5 class="card-title hippy">Antigenic Epitopes</h5>
         <div class="card-footer">
           <router-link to="/epitopes" class="btn btn-primary btn-blue btn-block">More info</router-link>
         </div>
@@ -65,8 +65,8 @@ export default {
   color: white;
 }
 .home .image-card{
-  width:210px;
-  height:210px;
+  width:150px;
+  height:150px;
 }
 
 .home .vertical-center{
@@ -91,16 +91,20 @@ export default {
   font-size: 17px;
 }
 
+.home .navbar a i {
+  font-size: 15px;
+}
+
 .home{
-  background: rgba(147,206,222,1) !important;
-background: -moz-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
-background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(147,206,222,1)), color-stop(41%, rgba(117,189,209,1)), color-stop(100%, rgba(205,105,214,1))) !important;
-background: -webkit-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
-background: -o-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
-background: -ms-linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
-background: linear-gradient(45deg, rgba(147,206,222,1) 0%, rgba(117,189,209,1) 41%, rgba(205,105,214,1) 100%) !important;
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#cd69d6', GradientType=1 ) !important;
-  min-height: 680px;
+  background: rgba(54,193,217,1);
+background: -moz-linear-gradient(45deg, rgba(54,193,217,1) 0%, rgba(54,193,217,1) 2%, rgba(100,116,184,1) 57%, rgba(168,0,119,1) 100%);
+background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(54,193,217,1)), color-stop(2%, rgba(54,193,217,1)), color-stop(57%, rgba(100,116,184,1)), color-stop(100%, rgba(168,0,119,1)));
+background: -webkit-linear-gradient(45deg, rgba(54,193,217,1) 0%, rgba(54,193,217,1) 2%, rgba(100,116,184,1) 57%, rgba(168,0,119,1) 100%);
+background: -o-linear-gradient(45deg, rgba(54,193,217,1) 0%, rgba(54,193,217,1) 2%, rgba(100,116,184,1) 57%, rgba(168,0,119,1) 100%);
+background: -ms-linear-gradient(45deg, rgba(54,193,217,1) 0%, rgba(54,193,217,1) 2%, rgba(100,116,184,1) 57%, rgba(168,0,119,1) 100%);
+background: linear-gradient(45deg, rgba(54,193,217,1) 0%, rgba(54,193,217,1) 2%, rgba(100,116,184,1) 57%, rgba(168,0,119,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36c1d9', endColorstr='#a80077', GradientType=1 );
+  min-height: 720px;
 }
 
 .home .jumbotron{
@@ -119,9 +123,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', end
   color: white;
 }
 .home .card-container{
-  padding-top: 20px;
+  padding-top: 35px;
   border: 2px solid white;
   border-radius: 20px;
+  min-height: 278px;
 }
 
 .home .card-footer{
