@@ -1,5 +1,12 @@
 <template >
+<div>
+ <div class="content">
+        <h3 class="text-muted">Measles Mumps and Rubella Viruses Database and Analysis Resource</h3>
+      </div>
+      <br>
+      <br>
  <section class="jumbotron vertical-center main">
+ 
   <div class="container text-muted">
       <div class="card-deck">
       <div class="card">
@@ -46,6 +53,7 @@
       </div>
       </div>
   </section>
+  </div>
 </template>
 
 <script>
@@ -61,6 +69,12 @@ export default {
 </script>
 
 <style>
+html{
+  height: 100%;
+}
+body{
+  height: 100% !important;
+}
 .home .hippy {
   color: white;
 }
@@ -70,7 +84,7 @@ export default {
 }
 
 .home .vertical-center{
-  min-height: 100%;
+  min-height: 70vh;
 }
 
 .home .navbar-header {
@@ -105,6 +119,13 @@ background: -ms-linear-gradient(45deg, rgba(54,193,217,1) 0%, rgba(54,193,217,1)
 background: linear-gradient(45deg, rgba(54,193,217,1) 0%, rgba(54,193,217,1) 2%, rgba(100,116,184,1) 57%, rgba(168,0,119,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36c1d9', endColorstr='#a80077', GradientType=1 );
   min-height: 720px;
+  height: 108%;
+}
+
+@media screen and (max-width: 768px){
+  .home {
+    height: auto;
+  }
 }
 
 .home .jumbotron{
@@ -123,10 +144,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36c1d9', end
   color: white;
 }
 .home .card-container{
-  padding-top: 35px;
+  padding-top: 70px;
   border: 2px solid white;
   border-radius: 20px;
-  min-height: 278px;
+  min-height: 335px;
 }
 
 .home .card-footer{
@@ -149,4 +170,5 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36c1d9', end
 .home .jumbotron-heading  a{
   color: white;
 }
+
 </style>

@@ -28,13 +28,8 @@
         <div class="d-none d-sm-block" style="width: 100px; height: 100px;"></div>
     <main role="main">
     
-      <div class="content">
-        <h3 class="text-muted">Measles Mumps and Rubella Viruses Database and Analysis Resource</h3>
-      </div>
-      <br>
-      <br>
+      
       <router-view/>
-      <br>
       <footer class="text-muted">
       <div class="container">
         <p>&copy; Imam Abdulrahman Bin Faisal University</p>

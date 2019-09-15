@@ -29,11 +29,11 @@
     <a class="nav-link" id="rubella-tab" data-toggle="tab" href="#hist" role="tab" aria-controls="hist" aria-selected="false">Rubella Epitopes</a>
   </li>
 </ul>
-<div class="tab-content" id="mainTabContent" style="color: white;">
+<div class="tab-content" id="mainTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
     <br>
     <section>
-    <table id="measles_ep" class="display nowrap table" style="width:100%; color: white;">
+    <table id="measles_ep" class="display nowrap table" style="width:100%;">
     </table>
     <br>
     <br>
